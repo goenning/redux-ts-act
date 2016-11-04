@@ -1,19 +1,23 @@
 import { Action, ActionCreator } from './index';
 import { Reducer } from 'redux';
 
-export interface ReducerBinder<S> {
+export interface ReducerBinder<S, T> {
   type: string;
-  reducer: Reducer<S>;
+  handler: Handler<S, T>;
 }
 
 export interface StateInitializer<S> {
   (): S;
 }
 
-export function createReducer<S>(initializer: S | StateInitializer<S>, ...binders: ReducerBinder<S>[]): Reducer<S> {
-  const map: { [key: string]: Reducer<S> } = { };
+export interface Handler<S, T> {
+  (state: S, payload: T): S;
+};
+
+export function createReducer<S>(initializer: S | StateInitializer<S>, ...binders: any[]): Reducer<S> {
+  const map: { [key: string]: any } = { };
   binders.forEach((binder) => {
-    map[binder.type] =  binder.reducer;
+    map[binder.type] =  binder.handler;
   });
 
   return (state: S, action: Action<any>): S => {
@@ -29,9 +33,9 @@ export function createReducer<S>(initializer: S | StateInitializer<S>, ...binder
   };
 };
 
-export function on<S, T>(creator: ActionCreator, reducer: Reducer<S>): ReducerBinder<S> {
+export function on<S, T>(creator: ActionCreator<T>, handler: Handler<S, T>): ReducerBinder<S, T> {
   return {
     type: creator.type,
-    reducer
+    handler
   };
 };

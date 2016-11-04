@@ -28,14 +28,16 @@ describe('action.async', () => {
 
     expect(login.done()).to.deep.eq({
       type: 'LOGIN_DONE',
-      payload: {
-        params: undefined,
-        result: undefined
-      },
+      payload: undefined,
       error: false
     });
 
-    expect(login.done({ token: 'H@KJASN*$#*&*SBNN' }, { user: 'admin', password: '123'})).to.deep.eq({
+    const payload = {
+      result: { token: 'H@KJASN*$#*&*SBNN' },
+      params: { user: 'admin', password: '123'}
+    };
+
+    expect(login.done(payload)).to.deep.eq({
       type: 'LOGIN_DONE',
       payload: {
         params: {
@@ -56,14 +58,16 @@ describe('action.async', () => {
 
     expect(login.failed()).to.deep.eq({
       type: 'LOGIN_FAILED',
-      payload: {
-        params: undefined,
-        error: undefined
-      },
+      payload: undefined,
       error: true
     });
 
-    expect(login.failed(new Error('something went wrong.'), { user: 'admin', password: '123'})).to.deep.eq({
+    const payload = {
+      error: new Error('something went wrong.'),
+      params: { user: 'admin', password: '123'}
+    };
+
+    expect(login.failed(payload)).to.deep.eq({
       type: 'LOGIN_FAILED',
       payload: {
         params: {

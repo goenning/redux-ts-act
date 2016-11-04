@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { action, Action, createReducer, on, Success, Failure } from '../src/';
+import { action, createReducer, on, Success, Failure } from '../src/';
 
 interface SearchBooksRequest {
   query: string;
@@ -32,13 +32,13 @@ const handleSearchFailed = (state: State, payload: Failure<SearchBooksRequest, E
   };
 };
 
-const reducer = createReducer(
+const reducer = createReducer<State>(
   { books: [] },
   on(search.done, handleSearchDone),
   on(search.failed, handleSearchFailed)
 );
 
-describe('reducer with async actions', () => {
+describe('reducer async', () => {
   const noop = { type: 'NOOP' };
   const books: Book[] = [
     { title: 'Harry Potter and the Philosopher\'s Stone', pages: 345 },
@@ -61,13 +61,23 @@ describe('reducer with async actions', () => {
   });
 
   it('should assign books from returned list', () => {
-    const newState = reducer(undefined!, search.done({ books }, { query: 'harry potter' }));
+    const payload = {
+      params: { query: 'harry potter' },
+      result: { books }
+    };
+
+    const newState = reducer(undefined!, search.done(payload));
     expect(newState).to.deep.eq({ books });
   });
 
   it('should clear books after failure list', () => {
-    const firstState = reducer(undefined!, search.done({ books }, { query: 'harry potter' }));
-    const newState = reducer(firstState, search.failed(new Error('Failure!'), { query: 'harry potter' }));
+
+    const payload = {
+      params: { query: 'harry potter' },
+      error: new Error('Failure!')
+    };
+
+    const newState = reducer({ books }, search.failed(payload));
     expect(newState).to.deep.eq({ books: [] });
   });
 });

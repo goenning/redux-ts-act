@@ -45,14 +45,16 @@ describe('action.async<T>', () => {
 
     expect(searchBooks.done()).to.deep.eq({
       type: 'SEARCH_BOOKS_DONE',
-      payload: {
-        params: undefined,
-        result: undefined
-      },
+      payload: undefined,
       error: false
     });
 
-    expect(searchBooks.done({ books }, { query: 'harry potter' })).to.deep.eq({
+    const payload = {
+      result: { books },
+      params: { query: 'harry potter' }
+    };
+
+    expect(searchBooks.done(payload)).to.deep.eq({
       type: 'SEARCH_BOOKS_DONE',
       payload: {
         params: {
@@ -72,14 +74,16 @@ describe('action.async<T>', () => {
 
     expect(searchBooks.failed()).to.deep.eq({
       type: 'SEARCH_BOOKS_FAILED',
-      payload: {
-        params: undefined,
-        error: undefined
-      },
+      payload: undefined,
       error: true
     });
 
-    expect(searchBooks.failed(new Error('database is corrupted.'), { query: 'harry potter' })).to.deep.eq({
+    const payload = {
+      error: new Error('database is corrupted.'),
+      params: { query: 'harry potter' }
+    };
+
+    expect(searchBooks.failed(payload)).to.deep.eq({
       type: 'SEARCH_BOOKS_FAILED',
       payload: {
         params: {
