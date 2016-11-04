@@ -49,21 +49,9 @@ describe('action.async<T>', () => {
       error: false
     });
 
-    const payload = {
-      result: { books },
-      params: { query: 'harry potter' }
-    };
-
-    expect(searchBooks.done(payload)).to.deep.eq({
+    expect(searchBooks.done({ books })).to.deep.eq({
       type: 'SEARCH_BOOKS_DONE',
-      payload: {
-        params: {
-          query: 'harry potter'
-        },
-        result: {
-          books
-        }
-      },
+      payload: { books },
       error: false
     });
   });
@@ -78,19 +66,9 @@ describe('action.async<T>', () => {
       error: true
     });
 
-    const payload = {
-      error: new Error('database is corrupted.'),
-      params: { query: 'harry potter' }
-    };
-
-    expect(searchBooks.failed(payload)).to.deep.eq({
+    expect(searchBooks.failed(new Error('database is corrupted.'))).to.deep.eq({
       type: 'SEARCH_BOOKS_FAILED',
-      payload: {
-        params: {
-          query: 'harry potter'
-        },
-        error: new Error('database is corrupted.')
-      },
+      payload: new Error('database is corrupted.'),
       error: true
     });
   });

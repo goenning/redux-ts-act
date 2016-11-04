@@ -13,17 +13,6 @@ describe('action', () => {
     });
   });
 
-  it('should create typeless failed action', () => {
-    const increment = action('INCREMENT').failed();
-    const act = increment();
-    expect(increment.type).to.eq('INCREMENT_FAILED');
-    expect(act).to.deep.eq({
-      type: 'INCREMENT_FAILED',
-      payload: undefined,
-      error: true
-    });
-  });
-
   it('should create typed action', () => {
     const increment = action<number>('INCREMENT');
     expect(increment.type).to.eq('INCREMENT');
@@ -32,17 +21,6 @@ describe('action', () => {
       type: 'INCREMENT',
       payload: 2,
       error: false
-    });
-  });
-
-  it('should create typed failed action', () => {
-    const increment = action<number>('INCREMENT').failed();
-    expect(increment.type).to.eq('INCREMENT_FAILED');
-    const act = increment(2);
-    expect(act).to.deep.eq({
-      type: 'INCREMENT_FAILED',
-      payload: 2,
-      error: true
     });
   });
 });

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { action, createReducer, on, Success, Failure } from '../src/';
+import { action, createReducer, on } from '../src/';
 
 interface SearchBooksRequest {
   query: string;
@@ -20,13 +20,13 @@ interface State {
   books: Book[];
 }
 
-const handleSearchDone = (state: State, payload: Success<SearchBooksRequest, SearchBooksResponse>): State => {
+const handleSearchDone = (state: State, payload: SearchBooksResponse): State => {
   return {
-    books: payload!.result!.books
+    books: payload.books
   };
 };
 
-const handleSearchFailed = (state: State, payload: Failure<SearchBooksRequest, Error>): State => {
+const handleSearchFailed = (state: State, payload: Error): State => {
   return {
     books: [ ]
   };
@@ -56,23 +56,12 @@ describe('reducer async', () => {
   });
 
   it('should assign books from returned list', () => {
-    const payload = {
-      params: { query: 'harry potter' },
-      result: { books }
-    };
-
-    const newState = reducer(undefined!, search.done(payload));
+    const newState = reducer(undefined!, search.done({ books }));
     expect(newState).to.deep.eq({ books });
   });
 
   it('should clear books after failure list', () => {
-
-    const payload = {
-      params: { query: 'harry potter' },
-      error: new Error('Failure!')
-    };
-
-    const newState = reducer({ books }, search.failed(payload));
+    const newState = reducer({ books }, search.failed(new Error('Failure!')));
     expect(newState).to.deep.eq({ books: [] });
   });
 });
