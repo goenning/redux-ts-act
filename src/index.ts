@@ -64,9 +64,11 @@ const factory: any = <T>(type: string) => {
   };
   creator.type = type;
   creator.error = () => {
-    return (payload: T): Action<T> => {
-      return { type, payload, error: true };
+    const errored: any =  (payload: T): Action<T> => {
+      return { type: `${type}_FAILED`, payload, error: true };
     };
+    errored.type = `${type}_FAILED`;
+    return errored;
   };
 
   return creator;

@@ -18,7 +18,7 @@ describe('action', () => {
     const act = increment();
     expect(increment.type).to.eq('INCREMENT_FAILED');
     expect(act).to.deep.eq({
-      type: 'INCREMENT',
+      type: 'INCREMENT_FAILED',
       payload: undefined,
       error: true
     });
@@ -40,7 +40,7 @@ describe('action', () => {
     expect(increment.type).to.eq('INCREMENT_FAILED');
     const act = increment(2);
     expect(act).to.deep.eq({
-      type: 'INCREMENT',
+      type: 'INCREMENT_FAILED',
       payload: 2,
       error: true
     });
