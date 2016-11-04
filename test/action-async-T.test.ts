@@ -94,23 +94,4 @@ describe('action.async<T>', () => {
       error: true
     });
   });
-
-  it('should create async typed finished action', () => {
-    const searchBooks = action.async<SearchBooksRequest, SearchBooksResponse, Error>('SEARCH_BOOKS');
-    expect(searchBooks.finished.type).to.eq('SEARCH_BOOKS_FINISHED');
-
-    expect(searchBooks.finished()).to.deep.eq({
-      type: 'SEARCH_BOOKS_FINISHED',
-      payload: undefined,
-      error: false
-    });
-
-    expect(searchBooks.finished({ query: 'harry potter' })).to.deep.eq({
-      type: 'SEARCH_BOOKS_FINISHED',
-      payload: {
-        query: 'harry potter'
-      },
-      error: false
-    });
-  });
 });

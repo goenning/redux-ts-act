@@ -1,7 +1,8 @@
 {
   "name": "redux-ts-act",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.0.1",
+  "main": "./lib/src/index.js",
+  "typings": "./lib/src/index.d.ts",
   "license": "MIT",
   "scripts": {
     "test": "tsc && nyc mocha lib/test"

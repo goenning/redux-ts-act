@@ -20,7 +20,6 @@ export interface AsyncActionCreatorFactory<P, S, F> {
   started: ActionCreator<P>;
   done: ActionCreator<Success<P, S>>;
   failed: ActionCreator<Failure<P, F>>;
-  finished: ActionCreator<P>;
 }
 
 export interface ActionCreatorFactory {
@@ -30,7 +29,7 @@ export interface ActionCreatorFactory {
 
 export interface ActionCreator<T> {
   type: string;
-  error(): ActionCreator<T>;
+  failed(): ActionCreator<T>;
   (payload?: T): Action<T>;
 }
 
@@ -39,12 +38,12 @@ const factory: any = <T>(type: string) => {
     return { type, payload, error: false };
   };
   creator.type = type;
-  creator.error = () => {
-    const errored: any =  (payload: T): Action<T> => {
+  creator.failed = () => {
+    const failed: any =  (payload: T): Action<T> => {
       return { type: `${type}_FAILED`, payload, error: true };
     };
-    errored.type = `${type}_FAILED`;
-    return errored;
+    failed.type = `${type}_FAILED`;
+    return failed;
   };
 
   return creator;
@@ -52,12 +51,11 @@ const factory: any = <T>(type: string) => {
 
 factory.async = <P, S, F>(type: string): AsyncActionCreatorFactory<P, S, F> => {
   const started = factory(`${type}_STARTED`);
-  const finished = factory(`${type}_FINISHED`);
 
   const done = factory(`${type}_DONE`);
-  const failed = factory(type).error();
+  const failed = factory(type).failed();
 
-  return { started, failed, done, finished };
+  return { started, failed, done };
 };
 
 export const action = factory as ActionCreatorFactory;

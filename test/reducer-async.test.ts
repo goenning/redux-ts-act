@@ -55,11 +55,6 @@ describe('reducer async', () => {
     expect(newState).to.deep.eq({ books: [] });
   });
 
-  it('should do nothing with finished handler', () => {
-    const newState = reducer(undefined!, search.finished({ query: 'harry potter' }));
-    expect(newState).to.deep.eq({ books: [] });
-  });
-
   it('should assign books from returned list', () => {
     const payload = {
       params: { query: 'harry potter' },

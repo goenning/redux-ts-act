@@ -79,24 +79,4 @@ describe('action.async', () => {
       error: true
     });
   });
-
-  it('should create async typeless finished action', () => {
-    const login = action.async('LOGIN');
-    expect(login.finished.type).to.eq('LOGIN_FINISHED');
-
-    expect(login.finished()).to.deep.eq({
-      type: 'LOGIN_FINISHED',
-      payload: undefined,
-      error: false
-    });
-
-    expect(login.finished({user: 'admin', password: '123'})).to.deep.eq({
-      type: 'LOGIN_FINISHED',
-      payload: {
-        user: 'admin',
-        password: '123'
-      },
-      error: false
-    });
-  });
 });
