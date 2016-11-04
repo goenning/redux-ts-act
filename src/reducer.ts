@@ -1,4 +1,3 @@
-import { ActionCreator } from './';
 import { Reducer, Action } from 'redux';
 
 export interface ReducerBinder<S> {
@@ -29,7 +28,7 @@ export function createReducer<S>(initializer: S | StateInitializer<S>, ...binder
   };
 };
 
-export function of<S, T>(creator: ActionCreator<T>, reducer: Reducer<S>): ReducerBinder<S> {
+export function of<S, T>(creator: Action, reducer: Reducer<S>): ReducerBinder<S> {
   return {
     type: creator.type,
     reducer

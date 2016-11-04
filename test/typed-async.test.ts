@@ -14,7 +14,7 @@ interface SearchBooksResponse {
   books: Book[];
 }
 
-describe('action.async', () => {
+describe('action.async<T>', () => {
   it('should create async typed started action', () => {
     const searchBooks = action.async<SearchBooksRequest, SearchBooksResponse, Error>('SEARCH_BOOKS');
     expect(searchBooks.started.type).to.eq('SEARCH_BOOKS_STARTED');

@@ -36,12 +36,12 @@ export interface ActionCreator<T> {
 
 export interface SuccessAsyncActionCreator<P, S> {
   type: string;
-  (result?: S, params?: P): Success<P, S>;
+  (result?: S, params?: P): Action<Success<P, S>>;
 }
 
 export interface FailureAsyncActionCreator<P, F> {
   type: string;
-  (error?: F, params?: P): Failure<P, F>;
+  (error?: F, params?: P): Action<Failure<P, F>>;
 }
 
 const successFactory: any = <S, P>(type: string) => {
