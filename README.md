@@ -1,3 +1,3 @@
 TODO: 
-- reducers
+- reducers for async
 - refactor
