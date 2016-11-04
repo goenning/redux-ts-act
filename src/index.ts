@@ -1,3 +1,5 @@
+export { createReducer, of } from './reducer';
+
 export interface Action<T> {
   type: string;
   payload?: T;
@@ -29,7 +31,7 @@ export interface ActionCreatorFactory {
 export interface ActionCreator<T> {
   type: string;
   error(): ActionCreator<T>;
-  (payload?: T): T;
+  (payload?: T): Action<T>;
 }
 
 export interface SuccessAsyncActionCreator<P, S> {
