@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { action, Action, createReducer, of, Success, Failure } from '../src/';
+import { action, Action, createReducer, on, Success, Failure } from '../src/';
 
 interface SearchBooksRequest {
   query: string;
@@ -34,8 +34,8 @@ const handleSearchFailed = (state: State, action: Action<Failure<SearchBooksRequ
 
 const reducer = createReducer(
   { books: [] },
-  of(search.done, handleSearchDone),
-  of(search.failed, handleSearchFailed)
+  on(search.done, handleSearchDone),
+  on(search.failed, handleSearchFailed)
 );
 
 describe('reducer with async actions', () => {

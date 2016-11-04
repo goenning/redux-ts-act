@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { action, Action, createReducer, of } from '../src/';
+import { action, Action, createReducer, on } from '../src/';
 
 const increment = action<number>('INCREMENT');
 const decrement = action<number>('DECREMENT');
@@ -25,8 +25,8 @@ const handleDecrement = (state: CounterState, action: Action<number>): CounterSt
 
 const reducer = createReducer(
   { counter: 0, operations: 0 },
-  of(increment, handleIncrement),
-  of(decrement, handleDecrement)
+  on(increment, handleIncrement),
+  on(decrement, handleDecrement)
 );
 
 describe('reducer', () => {

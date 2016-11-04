@@ -1,4 +1,4 @@
-export { createReducer, of } from './reducer';
+export { createReducer, on } from './reducer';
 
 export interface Action<T> {
   type: string;
