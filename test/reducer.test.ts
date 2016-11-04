@@ -9,16 +9,16 @@ interface CounterState {
   operations: number;
 }
 
-const handleIncrement = (state: CounterState, action: Action<number>): CounterState => {
+const handleIncrement = (state: CounterState, payload: number): CounterState => {
   return {
-    counter: state.counter + action.payload!,
+    counter: state.counter + payload!,
     operations: state.operations + 1
   };
 };
 
-const handleDecrement = (state: CounterState, action: Action<number>): CounterState => {
+const handleDecrement = (state: CounterState, payload: number): CounterState => {
   return {
-    counter: state.counter - action.payload!,
+    counter: state.counter - payload!,
     operations: state.operations + 1
   };
 };
@@ -53,8 +53,8 @@ describe('reducer', () => {
   it('initializer can also be a function', () => {
     const otherReducer = createReducer(
       () => { return { counter: 100, operations: 0 } },
-      of(increment, handleIncrement),
-      of(decrement, handleDecrement)
+      on(increment, handleIncrement),
+      on(decrement, handleDecrement)
     );
     const newState = otherReducer(undefined!, noop);
     expect(newState).to.deep.eq({ counter: 100, operations: 0 });

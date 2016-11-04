@@ -17,29 +17,33 @@ export interface Failure<P, F> {
 }
 
 export interface AsyncActionCreatorFactory<P, S, F> {
-  started: ActionCreator<P>;
+  started: BasicActionCreator<P>;
   done: SuccessAsyncActionCreator<P, S>;
   failed: FailureAsyncActionCreator<P, F>;
-  finished: ActionCreator<P>;
+  finished: BasicActionCreator<P>;
 }
 
 export interface ActionCreatorFactory {
-  <T>(type: string): ActionCreator<T>;
+  <T>(type: string): BasicActionCreator<T>;
   async<P, S, F>(type: string): AsyncActionCreatorFactory<P, S, F>;
 }
 
-export interface ActionCreator<T> {
+export interface ActionCreator {
   type: string;
-  error(): ActionCreator<T>;
+}
+
+export interface BasicActionCreator<T> {
+  type: string;
+  error(): BasicActionCreator<T>;
   (payload?: T): Action<T>;
 }
 
-export interface SuccessAsyncActionCreator<P, S> {
+export interface SuccessAsyncActionCreator<P, S> extends ActionCreator {
   type: string;
   (result?: S, params?: P): Action<Success<P, S>>;
 }
 
-export interface FailureAsyncActionCreator<P, F> {
+export interface FailureAsyncActionCreator<P, F> extends ActionCreator {
   type: string;
   (error?: F, params?: P): Action<Failure<P, F>>;
 }

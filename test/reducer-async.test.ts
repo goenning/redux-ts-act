@@ -20,13 +20,13 @@ interface State {
   books: Book[];
 }
 
-const handleSearchDone = (state: State, action: Action<Success<SearchBooksRequest, SearchBooksResponse>>): State => {
+const handleSearchDone = (state: State, payload: Success<SearchBooksRequest, SearchBooksResponse>): State => {
   return {
-    books: action.payload!.result!.books
+    books: payload!.result!.books
   };
 };
 
-const handleSearchFailed = (state: State, action: Action<Failure<SearchBooksRequest, Error>>): State => {
+const handleSearchFailed = (state: State, payload: Failure<SearchBooksRequest, Error>): State => {
   return {
     books: [ ]
   };
