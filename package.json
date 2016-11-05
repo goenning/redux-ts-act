@@ -1,6 +1,6 @@
 {
   "name": "redux-ts-act",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Typed actions & reducers for Redux",
   "main": "./lib/src/index.js",
   "typings": "./lib/src/index.d.ts",
