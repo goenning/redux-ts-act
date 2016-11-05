@@ -1,0 +1,5 @@
+src/
+test/
+lib/test/
+coverage/
+.nyc_output/

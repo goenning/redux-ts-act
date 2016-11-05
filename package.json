@@ -1,12 +1,21 @@
 {
   "name": "redux-ts-act",
   "version": "0.0.1",
+  "description": "Typed actions & reducers for Redux",
   "main": "./lib/src/index.js",
   "typings": "./lib/src/index.d.ts",
   "license": "MIT",
   "scripts": {
     "test": "tsc && nyc mocha lib/test"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goenning/redux-ts-act.git"
+  },
+  "bugs": {
+    "url": "https://github.com/goenning/redux-ts-act/issues"
+  },
+  "author": "Guilherme Oenning <me@goenning.net> (http://goenning.net/)",
   "devDependencies": {
     "@types/chai": "^3.4.34",
     "@types/mocha": "^2.2.32",
